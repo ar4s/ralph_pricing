@@ -1,17 +1,19 @@
+'use strict';
+
 var ang_controllers = angular.module('ang_controllers', []);
 
 ang_controllers.controller('componentsCtrl', ['$scope', '$routeParams', 'menuService', 'menuCalendar', 'stats',  function ($scope, $routeParams, menuService, menuCalendar, stats) {
     $scope.stats.refreshCurrentSubpage = function () {
-        stats.getComponentsData()
-    }
-    $scope.stats.menuStats.subpage.change = 'components'
+        stats.getComponentsData();
+    };
+    $scope.stats.menuStats.subpage.change = 'components';
     $scope.stats.refreshData();
 
     $scope.$watch(function () {
-        $scope.days = stats.components.days
+        $scope.days = stats.components.days;
         if (typeof(stats.components.content) != 'undefined') {
             if (stats.components.content != $scope.content) {
-                $scope.content = stats.components.content
+                $scope.content = stats.components.content;
                 stats.components.content.forEach(function (element, key) {
                     $scope.$evalAsync(function() {
                         $('#table_' + key + ' table').bootstrapTable({
@@ -28,20 +30,22 @@ ang_controllers.controller('componentsCtrl', ['$scope', '$routeParams', 'menuSer
         });
     };
     $scope.preMonths = ['january', 'february', 'march', 'april', 'may', 'june',
-        'july', 'august', 'september', 'october', 'november', 'december']
-    $scope.preventClose = function(event) {event.stopPropagation()};
+        'july', 'august', 'september', 'october', 'november', 'december'];
+    $scope.preventClose = function(event) {
+        event.stopPropagation();
+    };
 }]);
 
 ang_controllers.controller('mainCtrl', ['$scope', '$routeParams', 'menuService', 'menuCalendar', 'stats', function ($scope, $routeParams, menuService, menuCalendar, stats) {
-    stats.init()
-    $scope.menuService = menuService
-    $scope.menuCalendar = menuCalendar
-    $scope.stats = stats
+    stats.init();
+    $scope.menuService = menuService;
+    $scope.menuCalendar = menuCalendar;
+    $scope.stats = stats;
     $scope.getDictLength = function (dict) {
         if (typeof(dict) == 'object') {
-            return Object.keys(dict).length
+            return Object.keys(dict).length;
         }
-    }
+    };
 }]);
 
 
