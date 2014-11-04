@@ -2,10 +2,10 @@
 
 var scrooge = angular.module('scrooge.directives', []);
 
-scrooge.directive('mainMenu', function() {
-	return {
-		restrict: 'EA',
-		templateUrl: '/static/scrooge/partials/main_menu.html',
-		controller: 'MainMenuCtrl',
-	};
+scrooge.directive('subMenu', function() {
+    return {
+        restrict: 'EA',
+        templateUrl: '/static/scrooge/partials/sub_menu.html',
+        controller: 'SubMenuCtrl',
+    };
 });
