@@ -1,3 +1,5 @@
+'use strict';
+
 var ang_filters = angular.module('ang_filters', []);
 
 ang_filters.filter('intToMonth', function() {
@@ -14,30 +16,30 @@ ang_filters.filter('intToMonth', function() {
         '10': 'October',
         '11': 'November',
         '12': 'December'
-    }
-    return function(input, scope) {
-        return _intToMonth[input]
-    }
+    };
+    return function(input) {
+        return _intToMonth[input];
+    };
 });
 
 ang_filters.filter('intToService', ['stats', function(stats) {
-    return function(input, scope) {
+    return function(input) {
         for (var i in stats.leftMenus[stats.currentLeftMenu]) {
             if (stats.leftMenus[stats.currentLeftMenu][i].id == input) {
-                return stats.leftMenus[stats.currentLeftMenu][i].name
+                return stats.leftMenus[stats.currentLeftMenu][i].name;
             }
         }
-    }
+    };
 }]);
 
 ang_filters.filter('intToEnv', ['stats', function(stats) {
-    return function(input, scope) {
+    return function(input) {
         for (var i in stats.leftMenus[stats.currentLeftMenu]) {
             for (var k in stats.leftMenus[stats.currentLeftMenu][i].value.envs) {
                 if (stats.leftMenus[stats.currentLeftMenu][i].value.envs[k].id == input) {
-                    return stats.leftMenus[stats.currentLeftMenu][i].value.envs[k].name
+                    return stats.leftMenus[stats.currentLeftMenu][i].value.envs[k].name;
                 }
             }
         }
-    }
+    };
 }]);
