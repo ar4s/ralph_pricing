@@ -3,6 +3,10 @@
 var ang_controllers = angular.module('ang_controllers', []);
 
 ang_controllers.controller('componentsCtrl', ['$scope', '$routeParams', 'menuService', 'menuCalendar', 'stats',  function ($scope, $routeParams, menuService, menuCalendar, stats) {
+    stats.breadcrumbs = ['service', 'env'];
+    if ($scope.stats.currentSubMenu === false) {
+        $scope.stats.currentSubMenu = 'Components';
+    }
     $scope.stats.refreshCurrentSubpage = function () {
         stats.getComponentsData();
     };
@@ -49,6 +53,10 @@ ang_controllers.controller('mainCtrl', ['$scope', '$routeParams', 'menuService',
 }]);
 
 ang_controllers.controller('allocationClientCtrl', ['$scope', '$routeParams', 'menuService', 'menuCalendar', '$http', 'stats', function ($scope, $routeParams, $http, menuService, menuCalendar, stats) {
+    stats.breadcrumbs = ['service', 'env', 'tab'];
+    if ($scope.stats.currentSubMenu === false) {
+        $scope.stats.currentSubMenu = 'Allocations';
+    }
     stats.refreshCurrentSubpage = function () {
         stats.getAllocationClientData();
     };
@@ -97,4 +105,16 @@ ang_controllers.controller('allocationClientCtrl', ['$scope', '$routeParams', 'm
             stats.refreshData();
         }
     };
+}]);
+
+ang_controllers.controller('allocationAdminCtrl', ['$scope', '$routeParams', '$http', 'stats', function ($scope, $routeParams, $http, stats) {
+    stats.breadcrumbs = ['tab'];
+    stats.refreshCurrentSubpage = function () {
+        stats.getAllocationAdminData();
+    };
+    if ($scope.stats.currentSubMenu === false) {
+        $scope.stats.currentSubMenu = 'Allocations Admin';
+    }
+    $scope.stats.menuStats.subpage.change = 'allocationadmin';
+    $scope.stats.refreshData();
 }]);

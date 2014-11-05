@@ -5,6 +5,7 @@ var ang_services = angular.module('ang_services', ['ngResource']);
 
 ang_services.factory('stats', ['$http', function ($http) {
     return {
+        staticUri: '/static/scrooge/partials/',
         currentSubMenu: false,
         currentLeftMenu: false,
         currentTab: false,
@@ -25,6 +26,7 @@ ang_services.factory('stats', ['$http', function ($http) {
                 'table': false,
             },
         },
+        allocationadmin: {},
         allocationclient: {
             serviceExtraCostTypes: false,
             serviceDivision: {
@@ -119,8 +121,8 @@ ang_services.factory('stats', ['$http', function ($http) {
             $http({
                 method: 'GET',
                 url: url_chunks.join('/'),
-            }).
-            success(function(data) {
+            })
+            .success(function(data) {
                 if (data) {
                     data.forEach(function (element) {
                         self.allocationclient[element.key] = element.value;
@@ -131,6 +133,28 @@ ang_services.factory('stats', ['$http', function ($http) {
                             self.allocationclient.serviceExtraCostTypes = element.extra_cost_types;
                         }
                     });
+                }
+            });
+        },
+        getAllocationAdminData: function () {
+            var url_chunks = [
+                '/scrooge/rest/allocateadmin',
+                self.menuStats['year']['current'],
+                self.menuStats['month']['current'],
+            ];
+            $http({
+                method: 'GET',
+                url: url_chunks.join('/'),
+            })
+            .success(function(data) {
+                if (data) {
+                    Object.keys(data).forEach(function (element) {
+                        self.allocationadmin[element] = data[element];
+                        if (data[element].rows.length === 0 || data[element].disabled === true) {
+                            self.allocationadmin[element].rows = [{}];
+                        }
+                    });
+                    self.currentTab = Object.keys(self.allocationadmin)[0];
                 }
             });
         },
@@ -171,7 +195,7 @@ ang_services.factory('stats', ['$http', function ($http) {
         },
         getEnvs: function (service_id) {
             var envs = [];
-            if (self.leftMenus) {
+            if (Object.keys(self.leftMenus).length > 0) {
                 self.leftMenus['services'].forEach(function (element) {
                     if (element.id == service_id) {
                         envs = element.value.envs;
@@ -190,6 +214,11 @@ ang_services.factory('stats', ['$http', function ($http) {
                 }
             }
             return false;
+        },
+        getCurrentTab: function() {
+            if (Object.keys(self.allocationadmin).length > 0) {
+                return self.staticUri + self.allocationadmin[self.currentTab].template;
+            }
         }
     };
 }]);
