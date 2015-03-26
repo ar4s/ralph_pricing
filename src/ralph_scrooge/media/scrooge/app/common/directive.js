@@ -128,6 +128,9 @@ scrooge
 				}, function(newValue) {
 					if (newValue) {
 						refresh();
+						if ($scope.date.day === 0) {
+							$scope.date.day = 1;
+						}
 						var start = new Date(
 							$scope.date.year, $scope.date.month - 1, $scope.date.day
 						);
