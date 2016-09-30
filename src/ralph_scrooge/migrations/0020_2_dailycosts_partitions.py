@@ -36,7 +36,7 @@ class Migration(DataMigration):
 
         # partitions
         db.execute("""
-            ALTER TABLE `ralph`.`ralph_scrooge_dailycost`
+            ALTER TABLE `ralph_scrooge_dailycost`
             PARTITION BY RANGE(TO_DAYS(date))
             PARTITIONS 1
             SUBPARTITION BY KEY(forecast) (
